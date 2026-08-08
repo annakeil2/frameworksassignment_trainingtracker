@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from tracker import views
+ 
 urlpatterns = [
+    path("training/", views.training_self),
+    path("training/<int:user_id>/", views.training_user),
     path('admin/', admin.site.urls),
 ]

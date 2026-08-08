@@ -39,3 +39,15 @@ CREATE TABLE messages (
     message_subject TEXT,
     message_body TEXT
 );
+
+CREATE USER app WITH PASSWORD 'mystrongPW26A!';
+
+GRANT USAGE ON SCHEMA public TO app;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app;
+
+GRANT ALL ON SCHEMA public TO app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app;
+GRANT USAGE, SELECT ON SEQUENCE messages_id_seq TO app;
+
+SELECT * FROM messages;
