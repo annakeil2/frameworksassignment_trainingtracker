@@ -1,0 +1,17 @@
+django-admin startproject training_tracker .
+
+(Using the . at the end prevents Django from creating an extra, unnecessary nested directory.)
+Create a new app inside your project:
+
+python manage.py startapp myapp
+
+
+Run the local development server:
+Bash
+python manage.py runserver
+
+
+Create a superuser (Admin access):
+Bash
+python manage.py createsuperuser
+

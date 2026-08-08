@@ -1,0 +1,63 @@
+Training tracker for employees
+Aim is to track all external and internal training they receive for career development
+
+Login landing page 
+Forgotten password 
+Training
+Users: Employees and HR
+Messages
+Training hours 
+
+
+# Training
+id
+create_date
+updated_date
+user_id
+Name of training
+Training type
+Trainer Name
+Trainer email
+Strart date
+End date
+Training hours
+Organizer
+In-person 
+Training status
+Notes
+
+Training type:
+external 
+internal
+
+Training status:
+Ongoing
+Planned
+Completed
+Failed
+
+# Users
+id 
+create_date
+updated_date
+password
+email
+Name
+role_id
+
+# Messages
+id
+sender_user_id
+receiver_user_id
+create_date
+updated_date
+message_status
+
+# message_status
+active
+archived
+deleted
+
+# User_role
+employee
+HR
