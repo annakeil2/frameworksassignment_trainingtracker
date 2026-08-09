@@ -28,7 +28,6 @@ class Training(models.Model):
     user_id = models.IntegerField()
     training_name = models.TextField()
     training_type = models.IntegerField(
-        max_length=2,
         choices=TRAINING_TYPE,
     )
     trainer_name = models.TextField()
@@ -40,7 +39,6 @@ class Training(models.Model):
     training_hours = models.IntegerField()
     organiser = models.TextField(null=True, blank=True)
     training_status = models.IntegerField(
-        max_length=2,
         choices=TRAINING_STATUS
     )
 
@@ -48,13 +46,13 @@ class Training(models.Model):
         return "Training(" + self.id + "): " + self.training_name
 
 
-class Users(AbstractUser):
+class Staff(AbstractUser):
     
     id = models.AutoField(primary_key=True)
     updated_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return "User(" + self.id + ")"
+        return "Staff(" + self.id + ")"
 
 
 
@@ -75,7 +73,6 @@ class Message(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(null=True, blank=True)
     message_status = models.IntegerField(
-        max_length=2,
         choices=MESSAGE_STATUS
     )
     
