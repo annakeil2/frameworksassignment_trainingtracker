@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.jpeg') }}" > {% endcomment %}
+    <title>Message in a Bottle</title>
+    <meta name="description" content="Training tracker - Developed for internal employees to track their trainings
+    for career development.">
+    <meta name="author" content="Anna Keil">
+    
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+<nav>
+    <a href="/">Home</a>
+    <a href="/submit">Send</a>
+    <a href="/history">History</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+</nav>
+
+<div class="content"> {% block content %} {% endblock %} </div>
+
+<footer>
+    <p>Training tracker</p>
+</footer>
+
+{% comment %} <script src="{{ url_for('static', filename='js/script.js') }}"></script> {% endcomment %}
+</body>
+
+</html>

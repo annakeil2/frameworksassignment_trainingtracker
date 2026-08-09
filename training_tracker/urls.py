@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from tracker import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path("training/", views.training_self),
+    path("training/", views.training_self, name='training_self'),
     path("training/<int:user_id>/", views.training_user),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
@@ -45,5 +47,5 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
              template_name='password_reset_complete.html'
          ),
-         name='password_reset_complete'),
-]
+         name='password_reset_complete'), 
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
