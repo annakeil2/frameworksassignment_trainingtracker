@@ -1,0 +1,70 @@
+<aside class="sidebar">
+
+    <div class="sidebar-header">
+        <div class="logo">
+            <i class="bi bi-mortarboard-fill"></i>
+        </div>
+
+        <div>
+            <h5>Training</h5>
+            <small>Management System</small>
+        </div>
+    </div>
+
+    <div class="sidebar-menu">
+
+        <p class="menu-title">MAIN</p>
+
+        <a href="{% url 'training_self' %}" class="menu-item">
+            <i class="bi bi-calendar-event"></i>
+            <span>Training</span>
+        </a>
+
+        <p class="menu-title">COMMUNICATION</p>
+
+        <a href="{% url 'inbox' %}" class="menu-item">
+            <i class="bi bi-envelope"></i>
+            <span>Inbox</span>
+
+            {% if unread_messages %}
+                <span class="badge bg-danger">
+                    {{ unread_messages }}
+                </span>
+            {% endif %}
+        </a>
+
+        <a href="#" class="menu-item">
+            <i class="bi bi-archive"></i>
+            <span>Archived</span>
+        </a>
+
+        <p class="menu-title">ACCOUNT</p>
+
+        <a href="#" class="menu-item">
+            <i class="bi bi-person"></i>
+            <span>My Profile</span>
+        </a>
+
+        {% if user.is_staff %}
+            <p class="menu-title">ADMINISTRATION</p>
+
+            <a href="/admin/" class="menu-item">
+                <i class="bi bi-gear"></i>
+                <span>Administration</span>
+            </a>
+        {% endif %}
+
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="security-status">
+            <i class="bi bi-shield-check"></i>
+
+            <div>
+                <strong>Secure System</strong>
+                <small>Your data is protected</small>
+            </div>
+        </div>
+    </div>
+
+</aside>

@@ -22,10 +22,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("training/", views.training_self, name='training_self'),
-    path("training/<int:user_id>/", views.training_user),
+    path('training/', views.training_self, name='training_self'),
+    path('training/<int:user_id>/', views.training_user),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
+    path('inbox/', views.inbox, name='inbox'),
+    path('training_form/', views.training_form, name='training_create'),
     path(
         'password_reset/',
         auth_views.PasswordResetView.as_view(template_name='password_reset.html'),

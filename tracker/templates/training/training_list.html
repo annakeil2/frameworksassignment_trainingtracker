@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Training Management{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Welcome -->
+    <div class="welcome-section mb-4">
+
+        <div>
+            <p>
+                Your training activities.
+            </p>
+        </div>
+
+        <a href="{% url 'training_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-2"></i>
+            Add Training
+        </a>
+
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    <i class="bi bi-calendar-event"></i>
+                </div>
+
+                <div>
+                    <span>Total Training</span>
+                    <h3>{{ total_training|default:"0" }}</h3>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    <i class="bi bi-clock"></i>
+                </div>
+
+                <div>
+                    <span>Ongoing</span>
+                    <h3>{{ ongoing_training|default:"0" }}</h3>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+
+                <div>
+                    <span>Completed</span>
+                    <h3>{{ completed_training|default:"0" }}</h3>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    <i class="bi bi-envelope"></i>
+                </div>
+
+                <div>
+                    <span>Messages</span>
+                    <h3>{{ total_messages|default:"0" }}</h3>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Recent Training -->
+    <div class="row g-4">
+
+        <div class="col-lg-8">
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <h5>Recent Training</h5>
+                        <p>Latest training activities</p>
+                    </div>
+
+                    <a href="{% url 'training_self' %}">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="table-responsive">
+
+                    <table class="table training-table">
+
+                        <thead>
+                            <tr>
+                                <th>Training</th>
+                                <th>Trainer</th>
+                                <th>Start Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for training in trainings %}
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        {{ training.training_name }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{ training.trainer_name }}
+                                </td>
+
+                                <td>
+                                    {{ training.start_date|date:"d M Y" }}
+                                </td>
+
+                                <td>
+
+                                    {% if training.training_status == 1 %}
+                                        <span class="status ongoing">
+                                            Ongoing
+                                        </span>
+
+                                    {% elif training.training_status == 2 %}
+                                        <span class="status planned">
+                                            Planned
+                                        </span>
+
+                                    {% elif training.training_status == 3 %}
+                                        <span class="status completed">
+                                            Completed
+                                        </span>
+
+                                    {% else %}
+                                        <span class="status failed">
+                                            Failed
+                                        </span>
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% empty %}
+
+                            <tr>
+                                <td colspan="4" class="text-center py-4">
+                                    No training records found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+                    <div>
+                        <h5>Quick Actions</h5>
+                        <p>Frequently used features</p>
+                    </div>
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <a href="{% url 'training_create' %}" class="quick-action">
+                        <i class="bi bi-plus-circle"></i>
+
+                        <div>
+                            <strong>Add Training</strong>
+                            <small>Create a new training record</small>
+                        </div>
+
+                        <i class="bi bi-chevron-right arrow"></i>
+                    </a>
+
+
+                    <a href="{% url 'inbox' %}" class="quick-action">
+                        <i class="bi bi-envelope"></i>
+
+                        <div>
+                            <strong>Open Inbox</strong>
+                            <small>View your messages</small>
+                        </div>
+
+                        <i class="bi bi-chevron-right arrow"></i>
+                    </a>
+
+
+                    <a href="#" class="quick-action">
+                        <i class="bi bi-person"></i>
+
+                        <div>
+                            <strong>My Profile</strong>
+                            <small>Update your personal details</small>
+                        </div>
+
+                        <i class="bi bi-chevron-right arrow"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
