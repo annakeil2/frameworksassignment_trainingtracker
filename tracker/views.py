@@ -3,14 +3,23 @@ from django.shortcuts import render, redirect
 from .models import Training
 from django.conf import settings
 from .forms import TrainingForm
+from . import services 
 
 
 def training_self(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user_trainings = Training.objects.filter(user_id=user_id)
-        print(user_id, user_trainings)
-        context = {"user_id": user_id, "trainings": user_trainings}
+        total = services.get_total_number_of_trainings(user_trainings)
+        ongoing_training = services.get_number_of_ongoing_trainings(user_trainings)
+        completed_training = services.get_number_of_completed_trainings(user_trainings)
+        context = {
+            "user_id": user_id,
+            "trainings": user_trainings,
+            "total_training": total,
+            "ongoing_training": ongoing_training,
+            "completed_training": completed_training
+        }
         return render(request, "training/training_list.html", context)
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
