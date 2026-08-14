@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load display_user_full_name %}
 
 {% block content %}
 
@@ -22,26 +23,29 @@
                         <th>Date</th>
                         <th>Sender</th>
                         <th>Subject</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
                     {% for message in messages %}
-                        <tr style="cursor: pointer;"
-                            onclick="window.location='{% url 'message_detail' message.id %}'">
-
+                    <form action="/inbox/{{message.id}}">    
+                        <tr style="cursor: pointer;">
                             <td>
                                 {{ message.create_date|date:"d/m/Y H:i" }}
                             </td>
                             <td>
-                                {{ message.sender_user_id }}
+                                {{ message.sender_user_id | display_user_full_name}}
                             </td>
-                            <td>
+                            <td onclick="window.location='{% url 'message_detail' message.id %}'">
                                 <strong>{{ message.subject }}</strong>
                             </td>
-
+                            <td>
+                                {% include 'includes/message_status_select.html' with field_name="message_status" selected_value=message.message_status %}
+                            </td>
                         </tr>
+                    </form>
                     {% endfor %}
 
                 </tbody>

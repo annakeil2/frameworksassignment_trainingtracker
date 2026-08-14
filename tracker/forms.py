@@ -29,12 +29,9 @@ class TrainingForm(forms.ModelForm):
         
 class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        print('args', args)
-        print('kwargs', kwargs)
         sender_id = kwargs.pop('sender_id')
         super(MessageForm, self).__init__(*args, **kwargs)
         raw_staff = Staff.objects.exclude(id=sender_id)
-        print(raw_staff)
         staff = [(q.id, q.get_full_name()) for q in raw_staff]
         self.fields['receiver_user_id'] = forms.ChoiceField(
             choices=tuple(staff)
@@ -57,3 +54,19 @@ class MessageForm(forms.ModelForm):
                 attrs={'cols': 80, 'rows': 20}
             ),
         }
+        
+        
+        
+        
+        
+# class MessageStatusFormSet(forms.BaseModelFormSet):
+#     # def __init__(self, *args, **kwargs):
+#     #     selected_status_id = kwargs.pop('selected_status_id')
+#     #     super(MessageForm, self).__init__(*args, **kwargs)
+#     class Meta:
+#         model = Training
+                
+#     statuses = [(key, Message.MESSAGE_STATUS[key]) for key in Message.MESSAGE_STATUS]
+#     message_status = forms.ChoiceField(
+#         choices=tuple(statuses)
+#     )     

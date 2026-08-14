@@ -41,6 +41,7 @@ def inbox(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         messages = Message.objects.filter(receiver_user_id=user_id)
+        # status_form =  MessageStatusForm(initial={'message_status': })
         context={
             "messages": messages
         }

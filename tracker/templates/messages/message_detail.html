@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load display_user_full_name %}
 
 {% block content %}
 
@@ -25,12 +26,12 @@
 
                     <div class="mb-3">
                         <strong>From:</strong>
-                        {{ message.sender_user_id }}
+                        {{ message.sender_user_id | display_user_full_name}}
                     </div>
 
                     <div class="mb-3">
                         <strong>To:</strong>
-                        {{ message.receiver_user_id }}
+                        {{ message.receiver_user_id | display_user_full_name }}
                     </div>
 
                     <div class="mb-3">

@@ -62,7 +62,7 @@ class Message(models.Model):
         ACTIVE: "Active",
         ARCHIVED: "Archived",
         DELETED: "Deleted"
-        }
+    }
     id = models.AutoField(primary_key=True)
     sender_user_id = models.IntegerField(null=True)
     receiver_user_id = models.IntegerField()
