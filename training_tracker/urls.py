@@ -28,6 +28,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('inbox/', views.inbox, name='inbox'),
+    path('outbox/', views.outbox, name='outbox'),
+    path('compose/', views.compose, name='compose'),
+    path("message_detail/<int:message_id>/", views.message_detail, name='message_detail'),
     path('training_form/', views.training_form, name='training_create'),
     path(
         'password_reset/',

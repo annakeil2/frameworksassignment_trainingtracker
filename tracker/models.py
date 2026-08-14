@@ -46,7 +46,6 @@ class Training(models.Model):
         return f"Training({self.id}): {self.training_name}"
 
 class Staff(AbstractUser):
-    
     id = models.AutoField(primary_key=True)
     updated_date = models.DateTimeField(null=True, blank=True)
 
@@ -65,7 +64,7 @@ class Message(models.Model):
         DELETED: "Deleted"
         }
     id = models.AutoField(primary_key=True)
-    sender_user_id = models.IntegerField()
+    sender_user_id = models.IntegerField(null=True)
     receiver_user_id = models.IntegerField()
     body = models.CharField(max_length=65000)
     subject = models.CharField(max_length=1000)

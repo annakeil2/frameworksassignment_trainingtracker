@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 
-from .models import Training
+from .models import Training, Message
 from django.conf import settings
-from .forms import TrainingForm
-from . import services 
-
+from .forms import TrainingForm, MessageForm
+from . import services
 
 def training_self(request):
     if request.user.is_authenticated:
@@ -38,10 +37,65 @@ def training_user(request, user_id):
 # def training_form(request):
 #     return render(request, "training/training_form.html")
 
-
 def inbox(request):
-    return render(request, "messages/inbox.html")
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        messages = Message.objects.filter(receiver_user_id=user_id)
+        context={
+            "messages": messages
+        }
+        return render(request, "messages/inbox.html", context)
+    else:
+        return redirect('login_url')
 
+def outbox(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        messages = Message.objects.filter(sender_user_id=user_id)
+        context={
+            "messages": messages
+        }
+        return render(request, "messages/outbox.html", context)
+    else:
+        return redirect('login_url')
+    
+def message_detail(request, message_id):
+    print('message_id', message_id)
+    if request.user.is_authenticated:
+        message = Message.objects.get(id=message_id)
+        context={
+            "message": message
+        }
+        return render(request, "messages/message_detail.html", context)
+    else:
+        return redirect('login_url')
+
+
+def compose(request):
+        
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        if request.method == 'POST':
+            form = MessageForm(request.POST, sender_id=user_id)
+    
+            if form.is_valid():
+                message = form.save(commit=False)
+                print(message, user_id)
+                message.sender_user_id = request.user.id
+                message.message_status = Message.ACTIVE
+                message.save()
+                return redirect('inbox')
+        
+        else:
+            form = MessageForm(sender_id=user_id)
+        
+        return render(
+            request,
+            'messages/compose.html',
+            {'form': form}
+        )
+    else:
+        return redirect('login_url')
 
 def training_form(request):
     
