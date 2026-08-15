@@ -15,20 +15,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from tracker import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
+    re_path(r'^/?$', RedirectView.as_view(url='/training/')),
     path('training/', views.training_self, name='training_self'),
     path('training/<int:user_id>/', views.training_user),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('account_details/', views.account_details, name='account_details'),
+    path('registration/', views.registration, name='registration'),
     path('inbox/', views.inbox, name='inbox'),
     path('outbox/', views.outbox, name='outbox'),
+    path('archive/', views.archive, name='archive'),
     path('compose/', views.compose, name='compose'),
     path("message_detail/<int:message_id>/", views.message_detail, name='message_detail'),
     path("message_status/<int:message_id>/", views.message_status, name='message_status'),

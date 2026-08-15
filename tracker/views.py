@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 
-from .models import Training, Message
+from .models import Training, Message, Employee
 from django.conf import settings
-from .forms import TrainingForm, MessageForm
+from .forms import TrainingForm, MessageForm, EmployeeForm, RegistrationForm
 from . import services
+from django.utils import timezone
 
 def training_self(request):
     if request.user.is_authenticated:
@@ -31,23 +32,30 @@ def training_user(request, user_id):
         context = {"user_id": user_id, "trainings": user_trainings}
         return render(request, "training/training_list.html", context)
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
-    
-# def training_form(request):
-#     return render(request, "training/training_form.html")
 
 def inbox(request):
     if request.user.is_authenticated:
         user_id = request.user.id            
-        messages = Message.objects.filter(receiver_user_id=user_id)
-        # status_form =  MessageStatusForm(initial={'message_status': })
+        messages = Message.objects.filter(receiver_user_id=user_id, message_status=Message.ACTIVE)
         context={
             "messages": messages
         }
         return render(request, "messages/inbox.html", context)
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+    
+def archive(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id            
+        messages = Message.objects.filter(receiver_user_id=user_id, message_status=Message.ARCHIVED)
+        context={
+            "messages": messages
+        }
+        return render(request, "messages/inbox.html", context)
+    else:
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
 def message_status(request, message_id):
     print(request)
@@ -62,7 +70,7 @@ def message_status(request, message_id):
             message.save()
         return redirect('inbox')
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
 def outbox(request):
     if request.user.is_authenticated:
@@ -73,7 +81,7 @@ def outbox(request):
         }
         return render(request, "messages/outbox.html", context)
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
 def message_detail(request, message_id):
     print('message_id', message_id)
@@ -84,7 +92,7 @@ def message_detail(request, message_id):
         }
         return render(request, "messages/message_detail.html", context)
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
 
 def compose(request):
@@ -111,7 +119,7 @@ def compose(request):
             {'form': form}
         )
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
 def training_form(request):
     
@@ -134,4 +142,52 @@ def training_form(request):
             {'form': form}
         )
     else:
-        return redirect('login_url')
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+    
+    
+def account_details(request):
+    
+    if request.user.is_authenticated:
+        employee = Employee.objects.get(pk=request.user.id)
+        result = None
+        if request.method == 'POST':
+            form = EmployeeForm(request.POST, instance=employee)
+    
+            if form.is_valid():
+                employee = form.save(commit=False)
+                employee.updated_date = timezone.now()
+                employee.save()
+                result = 'User updated'
+        
+        else:
+            form = EmployeeForm(instance=employee)
+        
+        return render(
+            request,
+            'account_details.html',
+            {'form': form, 'result': result}
+        )
+    else:
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+    
+
+def registration(request): 
+    if request.user.is_authenticated == False:
+        result = None
+        if request.method == 'POST':
+            form = RegistrationForm(request.POST)
+    
+            if form.is_valid():
+                employee = form.save()
+                return redirect(f"/training/")
+        
+        else:
+            form = RegistrationForm()
+        
+        return render(
+            request,
+            'registration.html',
+            {'form': form, 'result': result}
+        )
+    else:
+        return redirect(f"/training/")

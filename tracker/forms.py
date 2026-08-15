@@ -1,5 +1,5 @@
 from django import forms
-from .models import Training, Staff
+from .models import Training, Employee
 from .models import Message
 
 class TrainingForm(forms.ModelForm):
@@ -31,7 +31,7 @@ class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         sender_id = kwargs.pop('sender_id')
         super(MessageForm, self).__init__(*args, **kwargs)
-        raw_staff = Staff.objects.exclude(id=sender_id)
+        raw_staff = Employee.objects.exclude(id=sender_id)
         staff = [(q.id, q.get_full_name()) for q in raw_staff]
         self.fields['receiver_user_id'] = forms.ChoiceField(
             choices=tuple(staff)
@@ -54,19 +54,43 @@ class MessageForm(forms.ModelForm):
                 attrs={'cols': 80, 'rows': 20}
             ),
         }
+       
         
+class EmployeeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EmployeeForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
         
+    class Meta:
+        model = Employee
+
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email'
+        ]
+
+class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
         
-        
-        
-# class MessageStatusFormSet(forms.BaseModelFormSet):
-#     # def __init__(self, *args, **kwargs):
-#     #     selected_status_id = kwargs.pop('selected_status_id')
-#     #     super(MessageForm, self).__init__(*args, **kwargs)
-#     class Meta:
-#         model = Training
-                
-#     statuses = [(key, Message.MESSAGE_STATUS[key]) for key in Message.MESSAGE_STATUS]
-#     message_status = forms.ChoiceField(
-#         choices=tuple(statuses)
-#     )     
+    class Meta:
+        model = Employee
+
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password'
+        ]
+    
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit: 
+            user.save()
+        return user

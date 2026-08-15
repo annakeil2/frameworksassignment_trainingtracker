@@ -38,16 +38,9 @@
             <span>Outbox</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="{% url 'archive' %}" class="menu-item">
             <i class="bi bi-archive"></i>
             <span>Archived</span>
-        </a>
-
-        <p class="menu-title">ACCOUNT</p>
-
-        <a href="#" class="menu-item">
-            <i class="bi bi-person"></i>
-            <span>My Profile</span>
         </a>
 
         {% if user.is_staff %}
@@ -59,17 +52,6 @@
             </a>
         {% endif %}
 
-    </div>
-
-    <div class="sidebar-footer">
-        <div class="security-status">
-            <i class="bi bi-shield-check"></i>
-
-            <div>
-                <strong>Secure System</strong>
-                <small>Your data is protected</small>
-            </div>
-        </div>
     </div>
 
 </aside>

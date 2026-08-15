@@ -131,8 +131,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Posted by aircraft, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-08-09, License - CC BY-SA 4.0
 
-AUTH_USER_MODEL = 'tracker.Staff'
-LOGIN_URL = 'login/'
+AUTH_USER_MODEL = 'tracker.Employee'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
