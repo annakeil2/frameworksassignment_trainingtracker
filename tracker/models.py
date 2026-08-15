@@ -43,9 +43,11 @@ class Training(models.Model):
     )
 
     def __str__(self):
+        """Return a readable representation of the training."""
         return f"Training({self.id}): {self.training_name}"
 
 class Employee(AbstractUser):
+    """Represent an employee who can use the training system."""
     id = models.AutoField(primary_key=True)
     updated_date = models.DateTimeField(null=True, blank=True)
 
@@ -55,6 +57,7 @@ class Employee(AbstractUser):
 
 
 class Message(models.Model):
+    """Represent a message sent between employees."""
     ACTIVE = 1
     ARCHIVED = 2   
     DELETED = 3
@@ -75,10 +78,12 @@ class Message(models.Model):
     )
     
     def __str__(self):
+        """Return a readable representation of the message."""
         return f"Message({self.id})"
     
     
 class EmployeeManager(BaseUserManager):
+    """Provide methods for creating employee user accounts."""
     def create_user(self, email, password=None):
         if not email:
             raise ValueError("You must enter an email address")
@@ -92,6 +97,7 @@ class EmployeeManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None):
+        """Create and save a superuser with administrator privileges."""
         user = self.create_user(
             email,
             password=password,

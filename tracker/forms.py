@@ -3,6 +3,7 @@ from .models import Training, Employee
 from .models import Message
 
 class TrainingForm(forms.ModelForm):
+    """Provide a form for creating and updating training records."""
     class Meta:
         model = Training
 
@@ -28,7 +29,9 @@ class TrainingForm(forms.ModelForm):
         }
         
 class MessageForm(forms.ModelForm):
+    """Provide a form for creating messages and selecting a recipient."""
     def __init__(self, *args, **kwargs):
+        """Initialise the form and exclude the sender from the recipient list."""
         sender_id = kwargs.pop('sender_id')
         super(MessageForm, self).__init__(*args, **kwargs)
         raw_staff = Employee.objects.exclude(id=sender_id)
@@ -57,7 +60,9 @@ class MessageForm(forms.ModelForm):
        
         
 class EmployeeForm(forms.ModelForm):
+    """Provide a form for viewing and updating employee details."""
     def __init__(self, *args, **kwargs):
+        """Initialise the form and exclude the sender from the recipient list."""
         super(EmployeeForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
         
@@ -72,8 +77,10 @@ class EmployeeForm(forms.ModelForm):
         ]
 
 class RegistrationForm(forms.ModelForm):
+    """Provide a form for registering a new employee account."""
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
     def __init__(self, *args, **kwargs):
+        """Initialise the form and make the email field required."""
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
         
@@ -89,6 +96,7 @@ class RegistrationForm(forms.ModelForm):
         ]
     
     def save(self, commit=True):
+        """Create the employee and securely hash their password."""
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
         if commit: 

@@ -7,6 +7,7 @@ from . import services
 from django.utils import timezone
 
 def training_self(request):
+    """Display the authenticated user's training records and training hour totals."""
     if request.user.is_authenticated:
         user_id = request.user.id
         user_trainings = Training.objects.filter(user_id=user_id)
@@ -24,8 +25,9 @@ def training_self(request):
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
-    
+   
 def training_user(request, user_id):
+    """Display training records and training hour totals for a specific employee."""
     if request.user.is_authenticated:
         if request.user.is_staff:
             employee = Employee.objects.get(pk=user_id)
@@ -47,6 +49,7 @@ def training_user(request, user_id):
     
 
 def training_employees(request):
+    """Display a list of all employees for staff users."""
     if request.user.is_authenticated:
         if request.user.is_staff:
             all_employees = Employee.objects.all()
@@ -56,6 +59,7 @@ def training_employees(request):
     
 
 def inbox(request):
+    """Display active messages received by the authenticated user."""
     if request.user.is_authenticated:
         user_id = request.user.id            
         messages = Message.objects.filter(receiver_user_id=user_id, message_status=Message.ACTIVE)
@@ -66,7 +70,9 @@ def inbox(request):
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
+    
 def archive(request):
+    """Display archived messages received by the authenticated user."""
     if request.user.is_authenticated:
         user_id = request.user.id            
         messages = Message.objects.filter(receiver_user_id=user_id, message_status=Message.ARCHIVED)
@@ -76,8 +82,10 @@ def archive(request):
         return render(request, "messages/inbox.html", context)
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
-    
+
+  
 def message_status(request, message_id):
+    """Update the status of a message belonging to the authenticated user."""
     print(request)
     if request.user.is_authenticated:
         user_id = request.user.id
@@ -92,7 +100,9 @@ def message_status(request, message_id):
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
+
 def outbox(request):
+    """Display messages sent by the authenticated user."""
     if request.user.is_authenticated:
         user_id = request.user.id
         messages = Message.objects.filter(sender_user_id=user_id)
@@ -102,8 +112,10 @@ def outbox(request):
         return render(request, "messages/outbox.html", context)
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
-    
+
+
 def message_detail(request, message_id):
+    """Display the details of a specific message."""
     print('message_id', message_id)
     if request.user.is_authenticated:
         message = Message.objects.get(id=message_id)
@@ -116,7 +128,7 @@ def message_detail(request, message_id):
 
 
 def compose(request):
-        
+    """Display the message composition form and handle sending new messages."""    
     if request.user.is_authenticated:
         user_id = request.user.id
         if request.method == 'POST':
@@ -141,8 +153,9 @@ def compose(request):
     else:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
+
 def training_form(request):
-    
+    """Display the training form and handle creation of a new training record."""    
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = TrainingForm(request.POST)
@@ -166,7 +179,7 @@ def training_form(request):
     
     
 def account_details(request):
-    
+    """Display and update the authenticated user's employee account details."""    
     if request.user.is_authenticated:
         employee = Employee.objects.get(pk=request.user.id)
         result = None
@@ -191,7 +204,8 @@ def account_details(request):
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
 
-def registration(request): 
+def registration(request):
+    """Display the registration form and create a new employee account."""
     if request.user.is_authenticated == False:
         result = None
         if request.method == 'POST':
