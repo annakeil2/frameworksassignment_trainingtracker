@@ -30,7 +30,7 @@
                 <tbody>
 
                     {% for message in messages %}
-                    <form action="/inbox/{{message.id}}">    
+                     
                         <tr style="cursor: pointer;">
                             <td>
                                 {{ message.create_date|date:"d/m/Y H:i" }}
@@ -42,10 +42,13 @@
                                 <strong>{{ message.subject }}</strong>
                             </td>
                             <td>
+                                <form action="/message_status/{{message.id}}/" method="POST">
+                                    {% csrf_token %}
                                 {% include 'includes/message_status_select.html' with field_name="message_status" selected_value=message.message_status %}
+                                 </form>
                             </td>
                         </tr>
-                    </form>
+                   
                     {% endfor %}
 
                 </tbody>

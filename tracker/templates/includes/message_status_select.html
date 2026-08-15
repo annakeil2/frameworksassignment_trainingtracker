@@ -1,6 +1,6 @@
 {% load selected_option %}
-<select name="{{field_name}}">
+<select onchange="saveOnChange(this)" name="{{field_name}}">
     <option value="1" {% selected_option selected_value 1 %}>Active</option>
-    <option value="2" {% selected_option selected_value 1 %}>Archived</option>
-    <option value="3" {% selected_option selected_value 1 %}>Deleted</option>
+    <option value="2" {% selected_option selected_value 2 %}>Archived</option>
+    <option value="3" {% selected_option selected_value 3 %}>Deleted</option>
 </select>

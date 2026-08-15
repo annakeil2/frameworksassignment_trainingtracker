@@ -31,6 +31,7 @@ urlpatterns = [
     path('outbox/', views.outbox, name='outbox'),
     path('compose/', views.compose, name='compose'),
     path("message_detail/<int:message_id>/", views.message_detail, name='message_detail'),
+    path("message_status/<int:message_id>/", views.message_status, name='message_status'),
     path('training_form/', views.training_form, name='training_create'),
     path(
         'password_reset/',

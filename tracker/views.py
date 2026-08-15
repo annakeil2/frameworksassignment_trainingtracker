@@ -39,13 +39,28 @@ def training_user(request, user_id):
 
 def inbox(request):
     if request.user.is_authenticated:
-        user_id = request.user.id
+        user_id = request.user.id            
         messages = Message.objects.filter(receiver_user_id=user_id)
         # status_form =  MessageStatusForm(initial={'message_status': })
         context={
             "messages": messages
         }
         return render(request, "messages/inbox.html", context)
+    else:
+        return redirect('login_url')
+    
+def message_status(request, message_id):
+    print(request)
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        if request.method == 'POST':
+            message_status = request.POST.get("message_status", 1)
+            message = Message.objects.get(pk=message_id)
+            if message.receiver_user_id != user_id:
+                return redirect('inbox')
+            message.message_status = message_status
+            message.save()
+        return redirect('inbox')
     else:
         return redirect('login_url')
 
