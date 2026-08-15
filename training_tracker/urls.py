@@ -25,7 +25,8 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     re_path(r'^/?$', RedirectView.as_view(url='/training/')),
     path('training/', views.training_self, name='training_self'),
-    path('training/<int:user_id>/', views.training_user),
+    path('training/employees/', views.training_employees, name='training_employees'),
+    path('training/<int:user_id>/', views.training_user, name='training_user'),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

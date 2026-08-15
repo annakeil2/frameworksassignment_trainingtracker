@@ -17,14 +17,9 @@ Dashboard
 
         <div>
             <p>
-                Your training activities.
+                Training activites for {{ employee.get_full_name }}.
             </p>
         </div>
-
-        <a href="{% url 'training_create' %}" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-2"></i>
-            Add Training
-        </a>
 
     </div>
 
@@ -80,25 +75,9 @@ Dashboard
         </div>
 
 
-        <div class="col-md-6 col-xl-3">
-            <div class="stat-card">
-
-                <div class="stat-icon purple">
-                    <i class="bi bi-envelope"></i>
-                </div>
-
-                <div>
-                    <span>Messages</span>
-                    <h3>{{ total_messages|default:"0" }}</h3>
-                </div>
-
-            </div>
-        </div>
-
     </div>
 
 
-    <!-- Recent Training -->
     <div class="row g-4">
 
         <div class="col-lg-12">
@@ -108,13 +87,9 @@ Dashboard
                 <div class="card-heading">
 
                     <div>
-                        <h5>Recent Training</h5>
-                        <p>Latest training activities</p>
+                        <h5>Training</h5>
                     </div>
 
-                    <a href="{% url 'training_self' %}">
-                        View All
-                    </a>
 
                 </div>
 

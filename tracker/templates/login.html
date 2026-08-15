@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "logged_out_base.html" %}
 
 {% block content %}
 
@@ -11,7 +11,8 @@
                     <h3 class="mb-0">Login</h3>
                 </div>
 
-<p>Need an account? Create one <a href = "{% url 'registration' %}"> here</a>.</p>
+    <p>Need an account? Create one <a href = "{% url 'registration' %}"> here</a>.</p>
+    <p>Forgotten password? Reset <a href = "{% url 'password_reset' %}"> here</a>.</p>
 
                 <div class="card-body">
 

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load display_training_type %}
+{% load display_training_status %}
+
+{% block title %}Employee Training{% endblock %}
+
+{% block page_title %}
+Employee Training
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="welcome-section mb-4">
+
+        <div>
+            <p>
+                Employee Training
+            </p>
+        </div>
+
+        <a href="{% url 'training_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-2"></i>
+            Add Training
+        </a>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-lg-12">
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <h5>Employees</h5>
+                    </div>
+
+
+                </div>
+
+
+                <div class="table-responsive">
+
+                    <table class="table training-table">
+
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for employee in employees %}
+
+                            <tr>
+
+
+                                <td>
+                                    <a href="{% url 'training_user' employee.id %}">{{ employee.get_full_name }}</a>
+                                </td>
+
+                            </tr>
+
+                            {% empty %}
+
+                            <tr>
+                                <td colspan="4" class="text-center py-4">
+                                    No employee records found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

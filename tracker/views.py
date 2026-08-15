@@ -10,9 +10,9 @@ def training_self(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user_trainings = Training.objects.filter(user_id=user_id)
-        total = services.get_total_number_of_trainings(user_trainings)
-        ongoing_training = services.get_number_of_ongoing_trainings(user_trainings)
-        completed_training = services.get_number_of_completed_trainings(user_trainings)
+        total = services.get_total_number_of_training_hours(user_trainings)
+        ongoing_training = services.get_ongoing_training_hours(user_trainings)
+        completed_training = services.get_completed_training_hours(user_trainings)
         context = {
             "user_id": user_id,
             "trainings": user_trainings,
@@ -26,13 +26,33 @@ def training_self(request):
     
     
 def training_user(request, user_id):
-    # To-do: Remember to check the user is in HR #
     if request.user.is_authenticated:
-        user_trainings = Training.objects.filter(id=user_id)
-        context = {"user_id": user_id, "trainings": user_trainings}
-        return render(request, "training/training_list.html", context)
-    else:
-        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+        if request.user.is_staff:
+            employee = Employee.objects.get(pk=user_id)
+            user_trainings = Training.objects.filter(id=user_id)
+            total = services.get_total_number_of_training_hours(user_trainings)
+            ongoing_training = services.get_ongoing_training_hours(user_trainings)
+            completed_training = services.get_completed_training_hours(user_trainings)
+            context = {
+                "user_id": user_id,
+                "trainings": user_trainings,
+                "employee": employee,
+                "total_training": total,
+                "ongoing_training": ongoing_training,
+                "completed_training": completed_training
+            }
+            return render(request, "training/training_user.html", context)
+        
+    return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+    
+
+def training_employees(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            all_employees = Employee.objects.all()
+            context = {"employees": all_employees}
+            return render(request, "training/training_employees.html", context)
+    return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     
 
 def inbox(request):
