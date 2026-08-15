@@ -20,20 +20,10 @@ body {
     color: var(--text);
 }
 
-
-/* =========================================
-   APPLICATION LAYOUT
-========================================= */
-
 .app-container {
     display: flex;
     min-height: 100vh;
 }
-
-
-/* =========================================
-   SIDEBAR
-========================================= */
 
 .sidebar {
     width: 260px;
@@ -141,11 +131,6 @@ body {
     color: #9ca3af;
 }
 
-
-/* =========================================
-   MAIN CONTENT
-========================================= */
-
 .main-content {
     margin-left: 260px;
     width: calc(100% - 260px);
@@ -154,7 +139,7 @@ body {
 
 .top-navbar {
     height: 80px;
-    background: white;
+    background: rgb(255, 255, 255);
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -181,11 +166,6 @@ body {
     padding: 30px;
 }
 
-
-/* =========================================
-   WELCOME
-========================================= */
-
 .welcome-section {
     display: flex;
     align-items: center;
@@ -203,11 +183,6 @@ body {
     margin: 0;
 }
 
-
-/* =========================================
-   BUTTONS
-========================================= */
-
 .btn-primary {
     background: var(--primary);
     border-color: var(--primary);
@@ -219,11 +194,6 @@ body {
     background: var(--primary-dark);
     border-color: var(--primary-dark);
 }
-
-
-/* =========================================
-   STATISTICS
-========================================= */
 
 .stat-card {
     background: white;
@@ -277,11 +247,6 @@ body {
     font-size: 26px;
 }
 
-
-/* =========================================
-   DASHBOARD CARDS
-========================================= */
-
 .dashboard-card {
     background: white;
     border: 1px solid var(--border);
@@ -314,11 +279,6 @@ body {
     font-size: 14px;
 }
 
-
-/* =========================================
-   TABLE
-========================================= */
-
 .training-table {
     margin-bottom: 0;
 }
@@ -340,11 +300,6 @@ body {
 .training-table tbody tr:hover {
     background: #f9fafb;
 }
-
-
-/* =========================================
-   STATUS
-========================================= */
 
 .status {
     display: inline-block;
@@ -373,11 +328,6 @@ body {
     background: #fee2e2;
     color: #b91c1c;
 }
-
-
-/* =========================================
-   QUICK ACTIONS
-========================================= */
 
 .quick-actions {
     padding: 10px 20px;
@@ -423,11 +373,6 @@ body {
     color: #9ca3af;
 }
 
-
-/* =========================================
-   PAGE HEADER
-========================================= */
-
 .page-header {
     display: flex;
     align-items: center;
@@ -444,11 +389,6 @@ body {
     color: var(--muted);
     margin: 5px 0 0;
 }
-
-
-/* =========================================
-   FORMS
-========================================= */
 
 .form-card {
     background: white;
@@ -495,13 +435,8 @@ body {
 .form_result {
     padding: 10px;
     background-color: lightgrey;
-    font-weight: bold;
+    font-weight: ;
 }
-
-
-/* =========================================
-   MESSAGES
-========================================= */
 
 .message-list {
     padding: 0;
@@ -558,11 +493,6 @@ body {
     font-size: 13px;
 }
 
-
-/* =========================================
-   EMPTY STATES
-========================================= */
-
 .empty-state {
     text-align: center;
     padding: 70px 20px;
@@ -577,11 +507,6 @@ body {
 .empty-state p {
     color: var(--muted);
 }
-
-
-/* =========================================
-   AUTHENTICATION
-========================================= */
 
 .auth-page {
     min-height: 100vh;
@@ -646,11 +571,6 @@ body {
     font-weight: 500;
 }
 
-
-/* =========================================
-   FOOTER
-========================================= */
-
 .footer {
     padding: 20px 30px;
     color: var(--muted);
@@ -660,11 +580,6 @@ body {
 .footer p {
     margin: 0;
 }
-
-
-/* =========================================
-   MOBILE
-========================================= */
 
 @media (max-width: 991px) {
 
