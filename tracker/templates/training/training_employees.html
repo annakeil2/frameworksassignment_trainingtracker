@@ -29,25 +29,19 @@ Employee Training
 
 
     <div class="row g-4">
-
         <div class="col-lg-12">
-
             <div class="dashboard-card">
-
                 <div class="card-heading">
 
                     <div>
                         <h5>Employees</h5>
                     </div>
 
-
                 </div>
 
 
                 <div class="table-responsive">
-
                     <table class="table training-table">
-
                         <thead>
                             <tr>
                                 <th>Employee</th>
@@ -59,12 +53,9 @@ Employee Training
                             {% for employee in employees %}
 
                             <tr>
-
-
                                 <td>
                                     <a href="{% url 'training_user' employee.id %}">{{ employee.get_full_name }}</a>
                                 </td>
-
                             </tr>
 
                             {% empty %}
@@ -78,17 +69,11 @@ Employee Training
                             {% endfor %}
 
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}

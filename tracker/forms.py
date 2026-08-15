@@ -3,7 +3,7 @@ from .models import Training, Employee
 from .models import Message
 
 class TrainingForm(forms.ModelForm):
-    """Provide a form for creating and updating training records."""
+    """A form for creating and updating training records."""
     class Meta:
         model = Training
 
@@ -27,9 +27,10 @@ class TrainingForm(forms.ModelForm):
                 attrs={'type': 'datetime-local'}
             ),
         }
-        
+
+       
 class MessageForm(forms.ModelForm):
-    """Provide a form for creating messages and selecting a recipient."""
+    """A form for creating messages"""
     def __init__(self, *args, **kwargs):
         """Initialise the form and exclude the sender from the recipient list."""
         sender_id = kwargs.pop('sender_id')
@@ -39,7 +40,8 @@ class MessageForm(forms.ModelForm):
         self.fields['receiver_user_id'] = forms.ChoiceField(
             choices=tuple(staff)
         )
-        
+
+ 
     class Meta:
         model = Message
 
@@ -60,11 +62,12 @@ class MessageForm(forms.ModelForm):
        
         
 class EmployeeForm(forms.ModelForm):
-    """Provide a form for viewing and updating employee details."""
+    """A form for viewing and updating employee details."""
     def __init__(self, *args, **kwargs):
         """Initialise the form and exclude the sender from the recipient list."""
         super(EmployeeForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
+    
         
     class Meta:
         model = Employee
@@ -76,14 +79,16 @@ class EmployeeForm(forms.ModelForm):
             'email'
         ]
 
+
 class RegistrationForm(forms.ModelForm):
-    """Provide a form for registering a new employee account."""
+    """A form for registering a new employee account."""
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
     def __init__(self, *args, **kwargs):
         """Initialise the form and make the email field required."""
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
-        
+    
+       
     class Meta:
         model = Employee
 
@@ -94,6 +99,7 @@ class RegistrationForm(forms.ModelForm):
             'email',
             'password'
         ]
+    
     
     def save(self, commit=True):
         """Create the employee and securely hash their password."""

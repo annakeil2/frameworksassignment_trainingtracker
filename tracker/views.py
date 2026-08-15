@@ -6,8 +6,9 @@ from .forms import TrainingForm, MessageForm, EmployeeForm, RegistrationForm
 from . import services
 from django.utils import timezone
 
+
 def training_self(request):
-    """Display the authenticated user's training records and training hour totals."""
+    """Display the logged in user's training records and training hour totals."""
     if request.user.is_authenticated:
         user_id = request.user.id
         user_trainings = Training.objects.filter(user_id=user_id)
@@ -28,6 +29,7 @@ def training_self(request):
    
 def training_user(request, user_id):
     """Display training records and training hour totals for a specific employee."""
+    """Only superusers can view other user's records"""
     if request.user.is_authenticated:
         if request.user.is_staff:
             employee = Employee.objects.get(pk=user_id)
@@ -49,7 +51,8 @@ def training_user(request, user_id):
     
 
 def training_employees(request):
-    """Display a list of all employees for staff users."""
+    """Display a list of all employees to view their training."""
+    """Only superusers can view other user's records"""
     if request.user.is_authenticated:
         if request.user.is_staff:
             all_employees = Employee.objects.all()
@@ -59,7 +62,7 @@ def training_employees(request):
     
 
 def inbox(request):
-    """Display active messages received by the authenticated user."""
+    """Display active messages for the current user."""
     if request.user.is_authenticated:
         user_id = request.user.id            
         messages = Message.objects.filter(receiver_user_id=user_id, message_status=Message.ACTIVE)
@@ -72,7 +75,7 @@ def inbox(request):
     
     
 def archive(request):
-    """Display archived messages received by the authenticated user."""
+    """Display archived messages for the current user."""
     if request.user.is_authenticated:
         user_id = request.user.id            
         messages = Message.objects.filter(receiver_user_id=user_id, message_status=Message.ARCHIVED)
@@ -85,8 +88,7 @@ def archive(request):
 
   
 def message_status(request, message_id):
-    """Update the status of a message belonging to the authenticated user."""
-    print(request)
+    """Update the status of a message belonging to the current user."""
     if request.user.is_authenticated:
         user_id = request.user.id
         if request.method == 'POST':
@@ -102,7 +104,7 @@ def message_status(request, message_id):
 
 
 def outbox(request):
-    """Display messages sent by the authenticated user."""
+    """Display messages sent by the current user."""
     if request.user.is_authenticated:
         user_id = request.user.id
         messages = Message.objects.filter(sender_user_id=user_id)
@@ -116,9 +118,10 @@ def outbox(request):
 
 def message_detail(request, message_id):
     """Display the details of a specific message."""
-    print('message_id', message_id)
     if request.user.is_authenticated:
         message = Message.objects.get(id=message_id)
+        if message.receiver_user_id != request.user.id:
+            return redirect('inbox')
         context={
             "message": message
         }
@@ -136,7 +139,6 @@ def compose(request):
     
             if form.is_valid():
                 message = form.save(commit=False)
-                print(message, user_id)
                 message.sender_user_id = request.user.id
                 message.message_status = Message.ACTIVE
                 message.save()
@@ -179,7 +181,7 @@ def training_form(request):
     
     
 def account_details(request):
-    """Display and update the authenticated user's employee account details."""    
+    """Display and update the current user's employee account details."""    
     if request.user.is_authenticated:
         employee = Employee.objects.get(pk=request.user.id)
         result = None

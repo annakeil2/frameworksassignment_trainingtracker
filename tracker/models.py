@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class Training(models.Model):
+    """ A record of an Employee's training """
     INTERNAL = 1
     EXTERNAL = 2   
     TRAINING_TYPE = {
@@ -42,12 +43,14 @@ class Training(models.Model):
         choices=TRAINING_STATUS.items()
     )
 
+
     def __str__(self):
         """Return a readable representation of the training."""
         return f"Training({self.id}): {self.training_name}"
 
+
 class Employee(AbstractUser):
-    """Represent an employee who can use the training system."""
+    """An employee who can use the training system."""
     id = models.AutoField(primary_key=True)
     updated_date = models.DateTimeField(null=True, blank=True)
 
@@ -55,9 +58,8 @@ class Employee(AbstractUser):
         return f"Employee({self.id}, {self.username})"
 
 
-
 class Message(models.Model):
-    """Represent a message sent between employees."""
+    """A message sent between employees."""
     ACTIVE = 1
     ARCHIVED = 2   
     DELETED = 3
@@ -77,14 +79,17 @@ class Message(models.Model):
         choices=MESSAGE_STATUS.items()
     )
     
+    
     def __str__(self):
         """Return a readable representation of the message."""
         return f"Message({self.id})"
     
     
 class EmployeeManager(BaseUserManager):
-    """Provide methods for creating employee user accounts."""
+    """Methods for creating employee user accounts."""
+    
     def create_user(self, email, password=None):
+        """Create a non-super user"""
         if not email:
             raise ValueError("You must enter an email address")
 
@@ -95,6 +100,7 @@ class EmployeeManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+
 
     def create_superuser(self, email, password=None):
         """Create and save a superuser with administrator privileges."""

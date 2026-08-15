@@ -12,7 +12,6 @@ Dashboard
 
 <div class="container-fluid">
 
-    <!-- Welcome -->
     <div class="welcome-section mb-4">
 
         <div>
@@ -98,7 +97,7 @@ Dashboard
     </div>
 
 
-    <!-- Recent Training -->
+    <!-- Training -->
     <div class="row g-4">
 
         <div class="col-lg-12">
@@ -108,8 +107,7 @@ Dashboard
                 <div class="card-heading">
 
                     <div>
-                        <h5>Recent Training</h5>
-                        <p>Latest training activities</p>
+                        <h5>Training</h5>
                     </div>
 
                     <a href="{% url 'training_self' %}">
@@ -186,17 +184,11 @@ Dashboard
                             {% endfor %}
 
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}

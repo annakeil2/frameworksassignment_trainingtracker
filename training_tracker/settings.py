@@ -162,6 +162,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER') # Login email address, Stored as an environment varaible
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS') #App Password set from gmail, Stored as an environment varaible
-
-print('EMAIL_HOST_USER', EMAIL_HOST_USER)
-print('EMAIL_HOST_PASSWORD', EMAIL_HOST_PASSWORD)

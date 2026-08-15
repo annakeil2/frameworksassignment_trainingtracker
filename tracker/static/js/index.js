@@ -1,21 +1,18 @@
+/**
+ * Add an event listener to toggle the sidebar and add a listener to close it when
+ * the user clicks away
+ */
 document.addEventListener("DOMContentLoaded", function () {
-
-    const sidebarToggle =
-        document.getElementById("sidebarToggle");
-
-    const sidebar =
-        document.querySelector(".sidebar");
-
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebar = document.querySelector(".sidebar");
 
     if (sidebarToggle && sidebar) {
-
         sidebarToggle.addEventListener("click", function () {
             sidebar.classList.add("show");
+            // Ensure hideOnClickOutside wasn't triggered by the inital click on the sidebarToggle
             window.setTimeout(() => hideOnClickOutside(sidebar), 100);
         });
-
     }
-
 });
 
 

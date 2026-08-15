@@ -1,14 +1,13 @@
-console.log('forms.js')
+/**
+ * Used to submit a parent form when a select element changes
+ */
 function saveOnChange(element){
-    console.log('BANANA', element)
     let parent = element.parentElement;
-    console.log(parent)
     while (
         parent !== document.body 
         && parent.tagName.toLowerCase() !== 'form'
     ){
         parent = parent.parentElement;
-        console.log(parent)
     }
 
     if (parent !== document.body) {
