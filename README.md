@@ -23,16 +23,15 @@ These all contain and carry crucial data, central to the application. I used Dja
 
 I built custom forms for such as login, password reset, registration, creating registration, creating training, and logout.
 
-## Fixes and Enhancements
-I made sure to validate all the python, html, and css code on trusted validator sites, as well as linters. 
-
 
 ## Deployed site
 
 This site has been deployed to GitHub Pages at the URL below:
 
-[https://github.com/annakeil2/database_assignment](https://github.com/annakeil2/database_assignment)
+[https://github.com/annakeil2/frameworksassignment_trainingtracker](https://github.com/annakeil2/frameworksassignment_trainingtracker)
 
 Link to render.com deployment below:
 
-[https://database-assignment-ohok.onrender.com/](https://database-assignment-ohok.onrender.com/)
+[https://frameworksassignment-trainingtracker.onrender.com/](https://frameworksassignment-trainingtracker.onrender.com/)
+
+Admin user access supplied in submission. 
